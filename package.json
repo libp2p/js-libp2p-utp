@@ -1,0 +1,33 @@
+{
+  "name": "libp2p-utp",
+  "version": "0.0.1",
+  "description": "Node.js implementation of the µTP module that libp2p uses, which implements the abstract-connection interface",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node tests/test-at.js"
+  },
+  "pre-commit": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diasdavid/js-libp2p-utp.git"
+  },
+  "keywords": [
+    "IPFS"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diasdavid/js-libp2p-utp/issues"
+  },
+  "homepage": "https://github.com/diasdavid/js-libp2p-utp",
+  "devDependencies": {
+    "abstract-connection": "0.0.1",
+    "abstract-transport": "^0.1.0",
+    "pre-commit": "^1.1.1",
+    "standard": "^5.2.2",
+    "tape": "^4.2.0"
+  },
+  "dependencies": {
+    "multiaddr": "^1.0.0",
+    "utp": "^0.0.8"
+  }
+}
