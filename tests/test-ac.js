@@ -1,5 +1,5 @@
 var tape = require('tape')
-var tests = require('abstract-connection/tests')
+var tests = require('interface-connection/tests')
 var conn = require('../src')
 
 var common = {
