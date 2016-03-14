@@ -4,9 +4,17 @@
   "description": "Node.js implementation of the µTP module that libp2p uses, which implements the abstract-connection interface",
   "main": "src/index.js",
   "scripts": {
-    "test": "node tests/test-ac.js"
+    "test:compliance:connection": "node tests/connection.js",
+    "test:compliance:transport": "node tests/transport.js",
+    "test:specific": "mocha tests/*-test.js",
+    "test": "npm run test:specific",
+    "test-2": "npm run test:specific && npm run test:compliance:transport && npm run test:compliance:connection",
+    "lint": "standard"
   },
-  "pre-commit": [],
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/diasdavid/js-libp2p-utp.git"
@@ -20,14 +28,17 @@
   },
   "homepage": "https://github.com/diasdavid/js-libp2p-utp",
   "devDependencies": {
+    "chai": "^3.5.0",
     "interface-connection": "^0.0.3",
     "interface-transport": "^0.1.1",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
     "pre-commit": "^1.1.2",
-    "standard": "^5.4.1",
-    "tape": "^4.4.0"
+    "standard": "^6.0.8",
+    "tape": "^4.5.1"
   },
   "dependencies": {
     "multiaddr": "^1.1.0",
-    "utp": "^0.0.8"
+    "utp-native": "^1.2.3"
   }
 }
