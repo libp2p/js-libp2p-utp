@@ -28,6 +28,6 @@
   },
   "dependencies": {
     "multiaddr": "^1.1.0",
-    "utp-native": "^1.2.2"
+    "utp-native": "^1.3.1"
   }
 }
