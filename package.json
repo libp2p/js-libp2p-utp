@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/diasdavid/js-libp2p-utp",
   "devDependencies": {
-    "interface-connection": "^0.0.3",
+    "interface-connection": "^0.2.1",
     "interface-transport": "^0.3.1",
     "pre-commit": "^1.1.2",
     "standard": "^5.4.1",
