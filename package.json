@@ -2,11 +2,19 @@
   "name": "libp2p-utp",
   "version": "0.1.0",
   "description": "Node.js implementation of the µTP module that libp2p uses, which implements the abstract-connection interface",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "node tests/test-ac.js"
+    "lint": "aegir-lint",
+    "test": "aegir-test node",
+    "build": "aegir-build only-node",
+    "release": "aegir-release only-node",
+    "coverage": "aegir-coverage",
+    "coverage-publish": "aegir-coverage publish"
   },
-  "pre-commit": [],
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/diasdavid/js-libp2p-utp.git"
@@ -20,14 +28,16 @@
   },
   "homepage": "https://github.com/diasdavid/js-libp2p-utp",
   "devDependencies": {
+    "aegir": "^2.1.1",
+    "chai": "^3.5.0",
     "interface-connection": "^0.0.3",
     "interface-transport": "^0.3.1",
     "pre-commit": "^1.1.2",
-    "standard": "^5.4.1",
     "tape": "^4.4.0"
   },
   "dependencies": {
     "multiaddr": "^1.1.0",
     "utp-native": "^1.2.2"
-  }
+  },
+  "jsnext:main": "src/index.js"
 }

@@ -1,3 +1,5 @@
+'use strict'
+
 var utp = require('utp-native')
 
 exports = module.exports
