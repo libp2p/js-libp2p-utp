@@ -33,7 +33,7 @@
     "interface-connection": "^0.0.3",
     "interface-transport": "^0.3.1",
     "pre-commit": "^1.1.2",
-    "tape": "^4.4.0"
+    "tape": "^4.6.2"
   },
   "dependencies": {
     "multiaddr": "^2.0.3",
