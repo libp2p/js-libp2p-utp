@@ -6,8 +6,8 @@ js-libp2p-utp
 ![](https://raw.githubusercontent.com/diasdavid/interface-connection/master/img/badge.png)
 ![](https://raw.githubusercontent.com/diasdavid/interface-transport/master/img/badge.png)
 
-> Node.js implementation of the `µTP` module that `libp2p` uses, which implements the [interface-transport](https://github.com/diasdavid/interface-transport) interface for dial/listen. Connections follow [interface-connection](https://github.com/diasdavid/interface-connection).
+> Node.js implementation of the `µTP` module that `libp2p` uses, which implements the [interface-transport](https://github.com/libp2p/interface-transport) interface for dial/listen. Connections follow [interface-connection](https://github.com/libp2p/interface-connection).
 
 # Acknowledgements
 
-`js-libp2p-utp` is a wrapper on top on [utp](https://github.com/mafintosh/utp) originally developed by [Mathias Buus](http://github.com/mafintosh)
+`js-libp2p-utp` is a wrapper on top on [utp](https://github.com/mafintosh/utp) originally developed by [Mathias Buus](https://github.com/mafintosh)
