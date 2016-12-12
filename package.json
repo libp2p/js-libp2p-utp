@@ -32,7 +32,7 @@
     "chai": "^3.5.0",
     "interface-connection": "^0.3.0",
     "interface-transport": "^0.3.1",
-    "pre-commit": "^1.2.0",
+    "pre-commit": "^1.2.1",
     "tape": "^4.6.2"
   },
   "dependencies": {
