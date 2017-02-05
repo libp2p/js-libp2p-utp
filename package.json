@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "multiaddr": "^2.1.3",
-    "utp-native": "^1.3.2"
+    "utp-native": "^1.4.0"
   },
   "jsnext:main": "src/index.js"
 }
