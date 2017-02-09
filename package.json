@@ -31,7 +31,7 @@
     "aegir": "^10.0.0",
     "chai": "^3.5.0",
     "interface-connection": "~0.3.0",
-    "interface-transport": "~0.3.3",
+    "interface-transport": "~0.3.4",
     "pre-commit": "^1.2.2",
     "tape": "^4.6.3"
   },
