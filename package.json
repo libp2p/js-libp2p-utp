@@ -37,6 +37,6 @@
   },
   "dependencies": {
     "multiaddr": "^2.2.1",
-    "utp-native": "^1.4.0"
+    "utp-native": "^1.5.0"
   }
 }
