@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/libp2p/js-libp2p-utp",
   "devDependencies": {
-    "aegir": "^10.0.0",
+    "aegir": "^11.0.0",
     "chai": "^3.5.0",
     "interface-connection": "~0.3.0",
     "interface-transport": "~0.3.3",
