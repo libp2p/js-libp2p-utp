@@ -36,7 +36,7 @@
     "tape": "^4.6.3"
   },
   "dependencies": {
-    "multiaddr": "^2.2.1",
+    "multiaddr": "^2.3.0",
     "utp-native": "^1.4.0"
   }
 }
