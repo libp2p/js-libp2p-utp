@@ -29,7 +29,7 @@
   "homepage": "https://github.com/libp2p/js-libp2p-utp",
   "devDependencies": {
     "aegir": "^10.0.0",
-    "chai": "^3.5.0",
+    "chai": "^4.0.0",
     "interface-connection": "~0.3.0",
     "interface-transport": "~0.3.3",
     "pre-commit": "^1.2.2",
