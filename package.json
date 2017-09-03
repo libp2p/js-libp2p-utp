@@ -40,5 +40,12 @@
   "dependencies": {
     "multiaddr": "^3.0.0",
     "utp-native": "^1.5.4"
-  }
+  },
+  "contributors": [
+    "David Dias <daviddias.p@gmail.com>",
+    "Pau Ramon Revilla <masylum@gmail.com>",
+    "Richard Littauer <richard.littauer@gmail.com>",
+    "dignifiedquire <dignifiedquire@gmail.com>",
+    "greenkeeperio-bot <support@greenkeeper.io>"
+  ]
 }
