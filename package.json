@@ -5,9 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "aegir-lint",
-    "test": "aegir-test node",
-    "build": "aegir-build only-node",
-    "release": "aegir-release only-node",
+    "test": "aegir-test --env node",
+    "release": "aegir-release --env no-build",
+    "release-minor": "aegir-release --type minor --env no-build",
+    "release-major": "aegir-release --type major --env no-build",
     "coverage": "aegir-coverage",
     "coverage-publish": "aegir-coverage publish"
   },
