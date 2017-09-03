@@ -2,10 +2,10 @@
 'use strict'
 
 var tape = require('tape')
-var tests = require('interface-transport/tests')
+var tests = require('interface-transport')
 var conn = require('../src')
 
-describe('interface-transport', () => {
+describe.skip('interface-transport', () => {
   it('works', (done) => {
     tests(tape, {
       setup (t, cb) {
