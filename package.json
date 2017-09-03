@@ -29,14 +29,15 @@
   "homepage": "https://github.com/libp2p/js-libp2p-utp",
   "devDependencies": {
     "aegir": "^11.0.2",
-    "chai": "^4.0.2",
+    "chai": "^4.1.2",
+    "dirty-chai": "^2.0.1",
     "interface-connection": "~0.3.2",
     "interface-transport": "~0.3.5",
     "pre-commit": "^1.2.2",
-    "tape": "^4.7.0"
+    "tape": "^4.8.0"
   },
   "dependencies": {
-    "multiaddr": "^2.3.0",
-    "utp-native": "^1.5.2"
+    "multiaddr": "^3.0.0",
+    "utp-native": "^1.5.4"
   }
 }
