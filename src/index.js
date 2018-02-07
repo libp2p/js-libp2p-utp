@@ -1,17 +1,39 @@
 'use strict'
 
-var utp = require('utp-native')
+const utp = require('utp-native')
+// const toPull = require('stream-to-pull-stream')
+const mafmt = require('mafmt')
+const includes = require('lodash.includes')
+// const isFunction = require('lodash.isfunction')
+// const Connection = require('interface-connection').Connection
+// const once = require('once')
+const debug = require('debug')
+const log = debug('libp2p:utp')
 
-exports = module.exports
+class UTP {
+  dial (ma, options, callback) {
+  }
 
-exports.dial = function (multiaddr, options) {
-  options.ready = options.ready || function noop () {}
-  var opts = multiaddr.toOptions()
-  var client = utp.connect(opts.port, opts.host)
+  createListener (options, handler) {
+  }
 
-  client.once('connect', options.ready)
+  filter (multiaddrs) {
+    if (!Array.isArray(multiaddrs)) {
+      multiaddrs = [multiaddrs]
+    }
 
-  return client
+    return multiaddrs.filter((ma) => {
+      if (includes(ma.protoNames(), 'p2p-circuit')) {
+        return false
+      }
+
+      if (includes(ma.protoNames(), 'ipfs')) {
+        ma = ma.decapsulate('ipfs')
+      }
+
+      return mafmt.UTP.matches(ma)
+    })
+  }
 }
 
-exports.createListener = utp.createServer
+module.exports = UTP
