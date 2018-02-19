@@ -25,7 +25,6 @@ module.exports = (handler) => {
     socket.on('error', noop)
 
     const addr = getMultiaddr(socket)
-    log('new connection', addr.toString())
 
     const s = toPull.duplex(socket)
 
@@ -80,7 +79,7 @@ module.exports = (handler) => {
 
     const lOpts = listeningAddr.toOptions()
     log('Listening on %s %s', lOpts.port, lOpts.host)
-    return server.listen(lOpts.port, lOpts.host, callback)
+    server.listen(lOpts.port, lOpts.host, callback)
   }
 
   listener.getAddrs = (callback) => {
