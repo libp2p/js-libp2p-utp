@@ -1,9 +1,13 @@
 'use strict'
 
-const multiaddr = require('multiaddr')
-const Address6 = require('ip-address').Address6
+// const multiaddr = require('multiaddr')
+// const Address6 = require('ip-address').Address6
 
 module.exports = (socket) => {
+  // utp-native does not pack the remoteAddress
+  // TODO check if it is possible
+  return null
+  /*
   let ma
 
   if (socket.remoteFamily === 'IPv6') {
@@ -25,4 +29,5 @@ module.exports = (socket) => {
   }
 
   return ma
+  */
 }
