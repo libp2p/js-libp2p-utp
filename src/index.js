@@ -3,6 +3,7 @@
 const utp = require('utp-native')
 const toPull = require('stream-to-pull-stream')
 const mafmt = require('mafmt')
+const withIs = require('class-is')
 const includes = require('lodash.includes')
 const isFunction = require('lodash.isfunction')
 const Connection = require('interface-connection').Connection
@@ -80,4 +81,4 @@ class UTP {
   }
 }
 
-module.exports = UTP
+module.exports = withIs(UTP, { className: 'UTP', symbolName: '@libp2p/js-libp2p-utp/utp' })
