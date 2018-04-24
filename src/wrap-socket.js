@@ -70,12 +70,16 @@ module.exports = socket => {
       const d = () => {
         wait = null
 
+        if (q.length) {
+          let d = q.shift()
+          return cb(null, d)
+        }
+
         if (ended) {
           return cb(ended)
         }
 
-        let d = q.shift()
-        return cb(null, d)
+        console.error('UTP[%s]: State error in source', addr)
       }
 
       if (q.length) {
