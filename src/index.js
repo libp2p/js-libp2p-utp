@@ -24,7 +24,7 @@ class UTP {
     callback = once(callback || noop)
 
     const cOpts = ma.toOptions()
-    cOpts.allowHalfOpen = true
+    // cOpts.allowHalfOpen = true // utp does not support this
     log('Connecting (UTP) to %s %s', cOpts.port, cOpts.host)
 
     const rawSocket = utp.connect(cOpts)
