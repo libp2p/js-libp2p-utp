@@ -5,7 +5,7 @@ const Connection = require('interface-connection').Connection
 // const os = require('os')
 const includes = require('lodash.includes')
 const utp = require('utp-native')
-const toPull = require('stream-to-pull-stream')
+const wrapSocket = require('./wrap-socket')
 const EventEmitter = require('events').EventEmitter
 const debug = require('debug')
 const log = debug('libp2p:utp:listen')
@@ -13,20 +13,19 @@ const log = debug('libp2p:utp:listen')
 const getMultiaddr = require('./get-multiaddr')
 
 const IPFS_CODE = 421
-const CLOSE_TIMEOUT = 2000
 
 function noop () {}
 
 module.exports = (handler) => {
   const listener = new EventEmitter()
 
-  const server = utp.createServer((socket) => {
+  const server = utp.createServer(/* {allowHalfOpen: true}, */ (socket) => {
     // Avoid uncaught errors cause by unstable connections
     socket.on('error', noop)
 
     const addr = getMultiaddr(socket)
 
-    const s = toPull.duplex(socket)
+    const s = wrapSocket(socket)
 
     s.getObservedAddrs = (cb) => cb(null, [addr])
 
@@ -52,19 +51,9 @@ module.exports = (handler) => {
     callback = callback || noop
     options = options || {}
 
-    const timeout = setTimeout(() => {
-      log('unable to close graciously, destroying conns')
-      Object.keys(server.__connections).forEach((key) => {
-        log('destroying %s', key)
-        server.__connections[key].destroy()
-      })
-    }, options.timeout || CLOSE_TIMEOUT)
+    server.close()
 
-    server.close(callback)
-
-    server.once('close', () => {
-      clearTimeout(timeout)
-    })
+    callback()
   }
 
   let ipfsId
@@ -139,6 +128,7 @@ function getIpfsId (ma) {
 function trackSocket (server, socket) {
   const key = `${socket.remoteAddress}:${socket.remotePort}`
   server.__connections[key] = socket
+  server.__connections[key].on('end', () => console.log(key, 'ended'))
 
   socket.on('close', () => {
     delete server.__connections[key]

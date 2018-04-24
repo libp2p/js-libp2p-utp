@@ -1,7 +1,7 @@
 'use strict'
 
 const utp = require('utp-native')
-const toPull = require('stream-to-pull-stream')
+const wrapSocket = require('./wrap-socket')
 const mafmt = require('mafmt')
 const withIs = require('class-is')
 const includes = require('lodash.includes')
@@ -24,6 +24,7 @@ class UTP {
     callback = once(callback || noop)
 
     const cOpts = ma.toOptions()
+    cOpts.allowHalfOpen = true
     log('Connecting (UTP) to %s %s', cOpts.port, cOpts.host)
 
     const rawSocket = utp.connect(cOpts)
@@ -40,7 +41,7 @@ class UTP {
       callback()
     })
 
-    const socket = toPull.duplex(rawSocket)
+    const socket = wrapSocket(rawSocket)
 
     const conn = new Connection(socket)
 
