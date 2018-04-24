@@ -63,9 +63,8 @@ describe('listen', () => {
 
   it('self-dial', (done) => {
     const listener = utp.createListener((conn) => { pull(conn, conn) })
-    listener.listen(ma(12000), err => {
-      expect(err).to.not.exist()
 
+    const dialAndEcho = () => {
       listener.getAddrs((err, multiaddrs) => {
         expect(err).to.not.exist()
 
@@ -81,6 +80,12 @@ describe('listen', () => {
           })
         )
       })
+    }
+
+    listener.listen(ma(12000), err => {
+      expect(err).to.not.exist()
+
+      dialAndEcho()
     })
   })
 
