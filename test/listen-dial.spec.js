@@ -71,11 +71,9 @@ describe('listen', () => {
 
         pull(
           pull.values(['hello']),
-          utp.dial(ma(12000)), // utp.dial(multiaddrs[0]), TODO: fix
+          utp.dial(multiaddrs[0]),
           pull.take(1), // hack arround missing half open support
           pull.collect((err, val) => {
-            console.log(val)
-
             expect(err).to.not.exist()
             expect(val.map(String).join('')).to.equal('hello')
 
@@ -86,7 +84,7 @@ describe('listen', () => {
     })
   })
 
-  it.skip('listen on port 0', (done) => {
+  it('listen on port 0', (done) => {
     const listener = utp.createListener((conn) => {})
 
     listener.listen(ma(0), () => {
@@ -129,7 +127,7 @@ describe('listen', () => {
     })
   })
 
-  it.skip('getAddrs on port 0 listen', (done) => {
+  it('getAddrs on port 0 listen', (done) => {
     const addr = ma(0)
 
     const listener = utp.createListener((conn) => {})
@@ -164,14 +162,14 @@ describe('listen', () => {
     listener.listen(addr, () => {
       listener.getAddrs((err, multiaddrs) => {
         expect(err).to.not.exist()
-        expect(multiaddrs.length > 0).to.equal(true)
+        expect(Boolean(multiaddrs.length)).to.equal(true)
         expect(multiaddrs[0].toString().indexOf('0.0.0.0')).to.equal(-1)
         listener.close(done)
       })
     })
   })
 
-  it.skip('getAddrs preserves IPFS Id', (done) => {
+  it('getAddrs preserves IPFS Id', (done) => {
     const ipfsId = '/ipfs/Qmb6owHp6eaWArVbcJJbQSyifyJBttMMjYV76N2hMbf5Vw'
     const addr = ma(9090).encapsulate(ipfsId)
 
@@ -181,7 +179,7 @@ describe('listen', () => {
       listener.getAddrs((err, multiaddrs) => {
         expect(err).to.not.exist()
         expect(multiaddrs.length).to.equal(1)
-        expect(multiaddrs[0]).to.eql(ma)
+        expect(multiaddrs[0]).to.eql(addr)
         listener.close(done)
       })
     })

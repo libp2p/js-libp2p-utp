@@ -44,8 +44,6 @@
     "mafmt": "^6.0.0",
     "multiaddr": "^4.0.0",
     "once": "^1.4.0",
-    "pull-pushable": "^2.2.0",
-    "stream-to-pull-stream": "^1.7.2",
     "utp-native": "^1.7.0"
   },
   "contributors": [

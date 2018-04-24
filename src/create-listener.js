@@ -104,14 +104,12 @@ module.exports = (handler) => {
     }
     */
 
-    if (address.family === 'IPv6') {
-      let ma = multiaddr('/ip6/' + address.address + '/tcp/' + address.port)
-      if (ipfsId) {
-        ma = ma.encapsulate('/ipfs/' + ipfsId)
-      }
-
-      multiaddrs.push(ma)
+    let ma = multiaddr('/ip' + (address.family === 'IPv6' ? '6' : '4') + '/' + address.address + '/udp/' + address.port + '/utp')
+    if (ipfsId) {
+      ma = ma.encapsulate('/ipfs/' + ipfsId)
     }
+
+    multiaddrs.push(ma)
 
     callback(null, multiaddrs)
   }
@@ -128,7 +126,6 @@ function getIpfsId (ma) {
 function trackSocket (server, socket) {
   const key = `${socket.remoteAddress}:${socket.remotePort}`
   server.__connections[key] = socket
-  server.__connections[key].on('end', () => console.log(key, 'ended'))
 
   socket.on('close', () => {
     delete server.__connections[key]
