@@ -2,6 +2,7 @@
   "name": "libp2p-utp",
   "version": "0.2.0",
   "description": "Node.js implementation of the µTP module that libp2p uses, which implements the abstract-connection interface",
+  "leadMaintainer": "Vasco Santos <vasco.santos@moxy.studio>",
   "main": "src/index.js",
   "scripts": {
     "lint": "aegir lint",
@@ -31,8 +32,7 @@
   "devDependencies": {
     "aegir": "^13.0.1",
     "chai": "^4.1.2",
-    "dirty-chai": "^2.0.1",
-    "pre-commit": "^1.2.2"
+    "dirty-chai": "^2.0.1"
   },
   "dependencies": {
     "class-is": "^1.0.0",
