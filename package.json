@@ -29,22 +29,23 @@
   },
   "homepage": "https://github.com/libp2p/js-libp2p-utp",
   "devDependencies": {
-    "aegir": "^13.0.7",
-    "chai": "^4.1.2",
+    "aegir": "^17.0.1",
+    "chai": "^4.2.0",
     "dirty-chai": "^2.0.1",
     "pre-commit": "^1.2.2"
   },
   "dependencies": {
     "class-is": "^1.1.0",
-    "debug": "^3.1.0",
+    "debug": "^4.1.0",
     "interface-connection": "~0.3.2",
     "ip-address": "^5.8.9",
     "lodash.includes": "^4.3.0",
     "lodash.isfunction": "^3.0.9",
-    "mafmt": "^6.0.0",
-    "multiaddr": "^4.0.0",
+    "mafmt": "^6.0.2",
+    "multiaddr": "^5.0.0",
     "once": "^1.4.0",
-    "utp-native": "^1.7.0"
+    "pull-stream": "^3.6.9",
+    "utp-native": "^2.1.0"
   },
   "contributors": [
     "David Dias <daviddias.p@gmail.com>",
