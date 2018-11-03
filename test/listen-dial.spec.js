@@ -36,7 +36,7 @@ describe('listen', () => {
       console.log('incomming connection')
     })
 
-    const addr = ma(12000)
+    const addr = ma(6000)
     const connectOptions = addr.toOptions()
 
     listener.listen(addr, () => {

@@ -8,7 +8,7 @@ const utp = require('utp-native')
 const toPull = require('stream-to-pull-stream')
 const EventEmitter = require('events').EventEmitter
 const debug = require('debug')
-const log = debug('libp2p:utp:listen')
+const log = debug('libp2p:utp')
 
 const getMultiaddr = require('./get-multiaddr')
 
@@ -79,7 +79,8 @@ module.exports = (handler) => {
 
     const lOpts = listeningAddr.toOptions()
     log('Listening on %s %s', lOpts.port, lOpts.host)
-    server.listen(lOpts.port, lOpts.host, callback)
+    console.log(Number(lOpts.port), lOpts.port)
+    server.listen(Number(lOpts.port), lOpts.host, callback)
   }
 
   listener.getAddrs = (callback) => {
