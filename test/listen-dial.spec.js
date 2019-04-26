@@ -40,8 +40,8 @@ describe('listen', () => {
     const connectOptions = addr.toOptions()
 
     listener.listen(addr, () => {
-      const socket1 = nativeUTP.connect(connectOptions.port, connectOptions.host)
-      const socket2 = nativeUTP.connect(connectOptions.port, connectOptions.host)
+      const socket1 = nativeUTP.connect(Number(connectOptions.port), connectOptions.host)
+      const socket2 = nativeUTP.connect(Number(connectOptions.port), connectOptions.host)
 
       socket1.write('Some data that is never handled')
       socket1.end()
