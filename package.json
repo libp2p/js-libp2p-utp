@@ -38,11 +38,11 @@
     "ip-address": "^5.9.0",
     "lodash.includes": "^4.3.0",
     "lodash.isfunction": "^3.0.9",
-    "mafmt": "^6.0.6",
-    "multiaddr": "^6.0.4",
+    "mafmt": "^6.0.7",
+    "multiaddr": "^6.0.6",
     "once": "^1.4.0",
-    "pull-stream": "^3.6.9",
-    "stream-to-pull-stream": "^1.7.2",
+    "pull-stream": "^3.6.11",
+    "stream-to-pull-stream": "^1.7.3",
     "utp-native": "^2.1.3"
   },
   "contributors": [
