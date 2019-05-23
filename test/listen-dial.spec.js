@@ -12,7 +12,7 @@ const multiaddr = require('multiaddr')
 const UTP = require('../src')
 const isCI = process.env.CI
 
-describe('listen', () => {
+describe('Listener (.createListener => listener)', () => {
   let utp
 
   function ma (port) {
@@ -24,17 +24,10 @@ describe('listen', () => {
     utp = new UTP()
   })
 
-  it('close listener with connections, through timeout', function (done) {
+  it('.close with connections, through timeout', function (done) {
     this.timeout(20 * 1000)
 
-    const listener = utp.createListener((conn) => {
-      pull(conn, conn)
-    })
-
-    listener.on('connection', () => {
-      // Testing
-      console.log('incomming connection')
-    })
+    const listener = utp.createListener((conn) => pull(conn, conn))
 
     const addr = ma(6000)
     const connectOptions = addr.toOptions()
@@ -46,22 +39,13 @@ describe('listen', () => {
       socket1.write('Some data that is never handled')
       socket1.end()
 
-      // TODO Unfortunately utp has no notion of gracious socket closing
-      // This feature needs to be shimmed on top to make it a proper libp2p
-      // transport
-      socket1.on('error', (err) => {
-        expect(err).to.not.exist()
-      })
-      socket2.on('error', (err) => {
-        expect(err).to.not.exist()
-      })
-      socket1.on('connect', () => {
-        listener.close(done)
-      })
+      socket1.on('error', (err) => expect(err).to.not.exist())
+      socket2.on('error', (err) => expect(err).to.not.exist())
+      socket1.on('connect', () => listener.close(done))
     })
   })
 
-  it.skip('listen on port 0', (done) => {
+  it('.listen on port 0', (done) => {
     const listener = utp.createListener((conn) => {})
 
     listener.listen(ma(0), () => {
@@ -69,7 +53,8 @@ describe('listen', () => {
     })
   })
 
-  it.skip('listen on IPv6 addr', function (done) {
+  // TODO: Get utp to work with IPv6 Addresses
+  it.skip('.listen on IPv6 addr', function (done) {
     if (isCI) { return this.skip() }
 
     const ma = multiaddr('/ip6/::/udp/12000/utp')
@@ -80,7 +65,7 @@ describe('listen', () => {
     })
   })
 
-  it.skip('listen on any Interface', (done) => {
+  it('.listen on any Interface', (done) => {
     const ma = multiaddr('/ip4/0.0.0.0/udp/12000/utp')
 
     const listener = utp.createListener((conn) => {})
@@ -90,7 +75,7 @@ describe('listen', () => {
     })
   })
 
-  it.skip('getAddrs', (done) => {
+  it('.getAddrs', (done) => {
     const listener = utp.createListener((conn) => {})
     const addr = ma(12000)
 
@@ -104,7 +89,7 @@ describe('listen', () => {
     })
   })
 
-  it.skip('getAddrs on port 0 listen', (done) => {
+  it('.getAddrs on port 0 listen', (done) => {
     const addr = ma(0)
 
     const listener = utp.createListener((conn) => {})
@@ -117,7 +102,8 @@ describe('listen', () => {
     })
   })
 
-  it.skip('getAddrs from listening on 0.0.0.0', (done) => {
+  // TODO: Get utp to understand the meaning of 0.0.0.0
+  it.skip('.getAddrs from listening on 0.0.0.0', (done) => {
     const addr = multiaddr('/ip4/0.0.0.0/udp/12000/utp')
 
     const listener = utp.createListener((conn) => {})
@@ -132,7 +118,8 @@ describe('listen', () => {
     })
   })
 
-  it.skip('getAddrs from listening on 0.0.0.0 and port 0', (done) => {
+  // TODO: Get utp to understand the meaning of 0.0.0.0
+  it.skip('.getAddrs from listening on 0.0.0.0 and port 0', (done) => {
     const addr = multiaddr('/ip4/0.0.0.0/udp/0/utp')
     const listener = utp.createListener((conn) => {})
 
@@ -146,7 +133,7 @@ describe('listen', () => {
     })
   })
 
-  it.skip('getAddrs preserves IPFS Id', (done) => {
+  it('.getAddrs preserves IPFS Id', (done) => {
     const ipfsId = '/ipfs/Qmb6owHp6eaWArVbcJJbQSyifyJBttMMjYV76N2hMbf5Vw'
     const addr = ma(9090).encapsulate(ipfsId)
 
@@ -156,16 +143,22 @@ describe('listen', () => {
       listener.getAddrs((err, multiaddrs) => {
         expect(err).to.not.exist()
         expect(multiaddrs.length).to.equal(1)
-        expect(multiaddrs[0]).to.eql(ma)
+        expect(multiaddrs[0]).to.eql(addr)
         listener.close(done)
       })
     })
   })
 })
 
-describe('dial', () => {
-  it.skip('create an instance', () => {
-    const utp = new UTP()
-    expect(utp).to.exist()
+/*
+describe('Dialer (.dial)', () => {
+  let utp
+
+  beforeEach(() => {
+    utp = new UTP()
+  })
+
+  it.skip('things', () => {
   })
 })
+*/

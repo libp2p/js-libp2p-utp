@@ -7,9 +7,16 @@ const expect = chai.expect
 chai.use(dirtyChai)
 const UTP = require('../src')
 
-describe('Connection', () => {
-  it('create an instance', () => {
-    const utp = new UTP()
+describe('Valid libp2p Connection', () => {
+  let utp
+
+  beforeEach(() => {
+    utp = new UTP()
+  })
+
+  it.skip('.getObservedAddrs', (done) => {
     expect(utp).to.exist()
   })
+  it.skip('.getPeerInfo', (done) => {})
+  it.skip('.setPeerInfo', (done) => {})
 })
