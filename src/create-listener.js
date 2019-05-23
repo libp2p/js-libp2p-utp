@@ -79,51 +79,30 @@ module.exports = (handler) => {
 
     const lOpts = listeningAddr.toOptions()
     log('Listening on %s %s', lOpts.port, lOpts.host)
-    console.log(Number(lOpts.port), lOpts.port)
     server.listen(Number(lOpts.port), lOpts.host, callback)
   }
 
   listener.getAddrs = (callback) => {
     const multiaddrs = []
-    const address = server.address()
+    const addr = server.address()
 
-    if (!address) {
+    if (!addr) {
       return callback(new Error('Listener is not ready yet'))
     }
 
-    // Because TCP will only return the IPv6 version
-    // we need to capture from the passed multiaddr
-    /*
-    if (listeningAddr.toString().indexOf('ip4') !== -1) {
-      let m = listeningAddr.decapsulate('utp')
-      m = m.encapsulate('/tcp/' + address.port)
-      if (ipfsId) {
-        m = m.encapsulate('/ipfs/' + ipfsId)
-      }
-
-      if (m.toString().indexOf('0.0.0.0') !== -1) {
-        const netInterfaces = os.networkInterfaces()
-        Object.keys(netInterfaces).forEach((niKey) => {
-          netInterfaces[niKey].forEach((ni) => {
-            if (ni.family === 'IPv4') {
-              multiaddrs.push(multiaddr(m.toString().replace('0.0.0.0', ni.address)))
-            }
-          })
-        })
-      } else {
-        multiaddrs.push(m)
-      }
+    let ma
+    if (addr.family === 'IPv6') {
+      ma = multiaddr(`/ip6/${addr.address}/udp/${addr.port}/utp`)
+    } else if (addr.family === 'IPv4') {
+      console.log(`/ip4/${addr.address}/udp/${addr.port}/utp`)
+      ma = multiaddr(`/ip4/${addr.address}/udp/${addr.port}/utp`)
     }
-    */
 
-    if (address.family === 'IPv6') {
-      let ma = multiaddr('/ip6/' + address.address + '/tcp/' + address.port)
-      if (ipfsId) {
-        ma = ma.encapsulate('/ipfs/' + ipfsId)
-      }
-
-      multiaddrs.push(ma)
+    if (ipfsId) {
+      ma = ma.encapsulate('/ipfs/' + ipfsId)
     }
+
+    multiaddrs.push(ma)
 
     callback(null, multiaddrs)
   }
