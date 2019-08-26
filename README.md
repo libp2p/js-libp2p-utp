@@ -20,6 +20,16 @@ js-libp2p-utp
 
 [Vasco Santos](https://github.com/vasco-santos).
 
+## API
+
+### Transport
+
+[![](https://raw.githubusercontent.com/libp2p/interface-transport/master/img/badge.png)](https://github.com/libp2p/interface-transport)
+
+### Connection
+
+[![](https://raw.githubusercontent.com/libp2p/interface-connection/master/img/badge.png)](https://github.com/libp2p/interface-connection)
+
 # Acknowledgements
 
 `js-libp2p-utp` is a wrapper on top on [utp](https://github.com/mafintosh/utp) originally developed by [Mathias Buus](https://github.com/mafintosh)

@@ -1,54 +1,75 @@
 'use strict'
 
+const debug = require('debug')
+const log = debug('libp2p:utp')
+const errcode = require('err-code')
+
 const utp = require('utp-native')
-const toPull = require('stream-to-pull-stream')
 const mafmt = require('mafmt')
 const withIs = require('class-is')
 const includes = require('lodash.includes')
 const isFunction = require('lodash.isfunction')
-const Connection = require('interface-connection').Connection
-const once = require('once')
+const { AbortError } = require('interface-transport')
+const Libp2pSocket = require('./socket')
 const createListener = require('./create-listener.js')
-const debug = require('debug')
-const log = debug('libp2p:utp')
 
 function noop () {}
 
 class UTP {
-  dial (ma, options, callback) {
-    if (isFunction(options)) {
-      callback = options
-      options = {}
-    }
+  async dial (ma, options = {}) {
+    const rawSocket = await this._connect(ma, options)
+    return new Libp2pSocket(rawSocket, ma, options)
+  }
 
-    callback = once(callback || noop)
-
+  _connect (ma, options) {
     const cOpts = ma.toOptions()
-    log('Connecting (UTP) to %s %s', cOpts.port, cOpts.host)
+    log('Dialing %s:%s', cOpts.host, cOpts.port)
 
-    const rawSocket = utp.connect(cOpts)
+    return new Promise((resolve, reject) => {
+      if ((options.signal || {}).aborted) {
+        return reject(new AbortError())
+      }
 
-    rawSocket.once('timeout', () => {
-      log('timeout')
-      rawSocket.emit('error', new Error('Timeout'))
+      const start = Date.now()
+      const rawSocket = utp.connect(cOpts)
+
+      const onError = (err) => {
+        const msg = `Error dialing ${cOpts.host}:${cOpts.port}: ${err.message}`
+        done(errcode(new Error(msg), err.code))
+      }
+
+      const onTimeout = () => {
+        log('Timeout dialing %s:%s', cOpts.host, cOpts.port)
+        const err = errcode(new Error(`Timeout after ${Date.now() - start}ms`), 'ETIMEDOUT')
+        // Note: this will result in onError() being called
+        rawSocket.emit('error', err)
+      }
+
+      const onConnect = () => {
+        log('Connected to %s:%s', cOpts.host, cOpts.port)
+        done(null, rawSocket)
+      }
+
+      const onAbort = () => {
+        log('Dial to %s:%s aborted', cOpts.host, cOpts.port)
+        done(new AbortError())
+      }
+
+      const done = (err, res) => {
+        rawSocket.removeListener('error', onError)
+        rawSocket.removeListener('timeout', onTimeout)
+        rawSocket.removeListener('connect', onConnect)
+        options.signal && options.signal.removeEventListener('abort', onAbort)
+
+        err ? reject(err) : resolve(res)
+      }
+
+      rawSocket.once('error', onError)
+      rawSocket.once('timeout', onTimeout)
+      rawSocket.once('connect', onConnect)
+      rawSocket.on('close', () => rawSocket.destroy())
+      options.signal && options.signal.addEventListener('abort', onAbort)
     })
-
-    rawSocket.once('error', callback)
-
-    rawSocket.once('connect', () => {
-      rawSocket.removeListener('error', callback)
-      callback()
-    })
-
-    const socket = toPull.duplex(rawSocket)
-
-    const conn = new Connection(socket)
-
-    conn.getObservedAddrs = (callback) => {
-      return callback(null, [ma])
-    }
-
-    return conn
   }
 
   createListener (options, handler) {
