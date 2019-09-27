@@ -12,6 +12,11 @@ const multiaddr = require('multiaddr')
 const UTP = require('../src')
 const isCI = process.env.CI
 
+const mockUpgrader = {
+  upgradeInbound: maConn => maConn,
+  upgradeOutbound: maConn => maConn
+}
+
 describe('Listener (.createListener => listener)', () => {
   let utp
 
@@ -21,7 +26,7 @@ describe('Listener (.createListener => listener)', () => {
   }
 
   beforeEach(() => {
-    utp = new UTP()
+    utp = new UTP({ upgrader: mockUpgrader })
   })
 
   it('.close with connections, through timeout', async () => {
@@ -78,7 +83,7 @@ describe('Listener (.createListener => listener)', () => {
 
   it('.getAddrs', async () => {
     const listener = utp.createListener((conn) => {})
-    const addr = ma(12000)
+    const addr = ma(12001)
 
     await listener.listen(addr)
 
@@ -130,7 +135,7 @@ describe('Listener (.createListener => listener)', () => {
   })
 
   it('.getAddrs preserves IPFS Id', async () => {
-    const ipfsId = '/ipfs/Qmb6owHp6eaWArVbcJJbQSyifyJBttMMjYV76N2hMbf5Vw'
+    const ipfsId = '/p2p/Qmb6owHp6eaWArVbcJJbQSyifyJBttMMjYV76N2hMbf5Vw'
     const addr = ma(9090).encapsulate(ipfsId)
 
     const listener = utp.createListener((conn) => {})
