@@ -1,5 +1,12 @@
-js-libp2p-utp
-=============
+# js-libp2p-utp
+
+:warning: Not actively maintained.
+
+👉 If you are looking for libp2p transports check [js-libp2p/doc/CONFIGURATION.md#transport](https://github.com/libp2p/js-libp2p/blob/master/doc/CONFIGURATION.md#transport).
+
+If you would like to help getting this module updated check [js-libp2p-utp#81](https://github.com/libp2p/js-libp2p-utp/pull/81)
+
+---
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://protocol.ai)
 [![](https://img.shields.io/badge/project-libp2p-yellow.svg?style=flat-square)](http://libp2p.io/)
